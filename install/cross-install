@@ -1,0 +1,2 @@
+cd $CRAFT_PART_SRC && cp -r . ~/
+source ~/.cross-prepare-env
