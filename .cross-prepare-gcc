@@ -1,0 +1,24 @@
+# cross-prepare-build-gcc 
+#
+# Prepare a build for a cross-build environment with gcc in snapcraft
+# To be used as a first instruction in a override-build statement in snapcraft.yaml
+#
+# Requires snapcraft > 7.x and base: core22
+#
+
+source ~/.prepare-build
+set +u
+
+# install runtime packages
+apt install -y crossbuild-essential-$CRAFT_TARGET_ARCH
+# set cross-compile environment
+if [ -z "$CRAFT_ARCH_TRIPLET" ]; then
+   echo CRAFT_ARCH_TRIPLET not set!
+   exit 1
+else
+   export AR=$(which $CRAFT_ARCH_TRIPLET\-ar)
+   export CC=$(which $CRAFT_ARCH_TRIPLET\-gcc)
+   export CXX=$(which $CRAFT_ARCH_TRIPLET\-g++)
+   export LINK=$(which $CRAFT_ARCH_TRIPLET\-g++)
+   export LDFLAGS=-L/usr/$CRAFT_ARCH_TRIPLET/lib
+fi

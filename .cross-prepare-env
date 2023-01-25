@@ -1,0 +1,31 @@
+# cross-build-utils.prepare-env
+#
+# Prepare a cross-build environment for snapcraft
+# To be used as a first instruction in a override-pull statement in snapcraft.yaml
+# Requires snapcraft > 7.x and base: core22
+
+export HOST_ARCH=$(uname -m)
+
+if [[ -z "${CRAFT_TARGET_ARCH}" ]]; then
+    echo "CRAFT_TARGET_ARCH is not set. cross-build-utils.prepare-env should be invoked by snapcraft only!"
+    exit 1
+fi
+
+if [[ "${CRAFT_TARGET_ARCH}" != "amd64" ]]; then
+    # install runtime packages 
+    apt install -y software-properties-common
+    apt install -y coreutils
+
+    echo "Preparing build environment for cross-build on host: $HOST_ARCH, target: $CRAFT_TARGET_ARCH"
+    add-apt-repository -n "deb [arch=$CRAFT_TARGET_ARCH] http://ports.ubuntu.com/ubuntu-ports jammy main restricted"
+    add-apt-repository -n "deb [arch=$CRAFT_TARGET_ARCH] http://ports.ubuntu.com/ubuntu-ports jammy-updates main restricted"
+    add-apt-repository -n "deb [arch=$CRAFT_TARGET_ARCH] http://ports.ubuntu.com/ubuntu-ports jammy universe"
+    add-apt-repository -n "deb [arch=$CRAFT_TARGET_ARCH] http://ports.ubuntu.com/ubuntu-ports jammy-updates universe"
+    add-apt-repository -n "deb [arch=$CRAFT_TARGET_ARCH] http://ports.ubuntu.com/ubuntu-ports jammy multiverse"
+    add-apt-repository -n "deb [arch=$CRAFT_TARGET_ARCH] http://ports.ubuntu.com/ubuntu-ports jammy-updates multiverse"
+    add-apt-repository -n "deb [arch=$CRAFT_TARGET_ARCH] http://ports.ubuntu.com/ubuntu-ports jammy-backports main restricted universe multiverse"
+    add-apt-repository -n "deb [arch=$CRAFT_TARGET_ARCH] http://ports.ubuntu.com/ubuntu-ports jammy-security main restricted"
+    add-apt-repository -n "deb [arch=$CRAFT_TARGET_ARCH] http://ports.ubuntu.com/ubuntu-ports jammy-security universe"
+    add-apt-repository -n "deb [arch=$CRAFT_TARGET_ARCH] http://ports.ubuntu.com/ubuntu-ports jammy-security multiverse"
+    apt update
+fi
