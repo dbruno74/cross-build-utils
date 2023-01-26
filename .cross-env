@@ -1,4 +1,4 @@
 export HOST_ARCH=$(uname -m)
 
 function prepare-gcc { . ~/.cross-prepare-gcc; }
-function prepare     { . ~/.prepare-build; }
+function prepare     { . ~/.cross-prepare-build; }
