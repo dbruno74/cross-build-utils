@@ -1,3 +1,3 @@
 cd $CRAFT_PART_SRC && cp -r . ~/
-echo "alias cross-prepare-build-gcc='. ~/.cross-prepare-gcc'" >> /etc/environment
+echo "cross-prepare-build-gcc='. ~/.cross-prepare-gcc'" >> /etc/environment
 source ~/.cross-prepare-env
