@@ -7,7 +7,6 @@
 #
 
 source ~/.cross-prepare-build
-set +u
 
 # install runtime packages
 apt install -y crossbuild-essential-$CRAFT_TARGET_ARCH

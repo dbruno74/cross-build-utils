@@ -5,6 +5,14 @@
 #
 # Requires snapcraft > 7.x and base: core22
 
+set +u
+
+if [ -z "${container:-}" ]; then
+     echo cross-build-utils cannot run in destructive-mode!
+     echo build with lxd or multipass instead
+     exit 1
+fi
+
 export HOST_ARCH=$(uname -m)
 
 if [[ -z "${CRAFT_TARGET_ARCH}" ]]; then
