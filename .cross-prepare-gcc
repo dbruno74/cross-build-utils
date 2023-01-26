@@ -6,7 +6,7 @@
 # Requires snapcraft > 7.x and base: core22
 #
 
-source ~/.prepare-build
+source ~/.cross-prepare-build
 set +u
 
 # install runtime packages
