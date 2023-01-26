@@ -8,16 +8,20 @@
 
 source ~/.cross-prepare-build
 
-# install runtime packages
-apt install -y crossbuild-essential-$CRAFT_TARGET_ARCH
-# set cross-compile environment
-if [ -z "$CRAFT_ARCH_TRIPLET" ]; then
-   echo CRAFT_ARCH_TRIPLET not set!
-   exit 1
+if [ "$CRAFT_TARGET_ARCH" != "amd64" ]; then
+   # install runtime packages
+   apt install -y crossbuild-essential-$CRAFT_TARGET_ARCH
+   # set cross-compile environment
+   if [ -z "$CRAFT_ARCH_TRIPLET" ]; then
+      echo CRAFT_ARCH_TRIPLET not set!
+      exit 1
+   else
+      export AR=$(which $CRAFT_ARCH_TRIPLET\-ar)
+      export CC=$(which $CRAFT_ARCH_TRIPLET\-gcc)
+      export CXX=$(which $CRAFT_ARCH_TRIPLET\-g++)
+      export LINK=$(which $CRAFT_ARCH_TRIPLET\-g++)
+      export LDFLAGS=-L/usr/$CRAFT_ARCH_TRIPLET/lib
+   fi
 else
-   export AR=$(which $CRAFT_ARCH_TRIPLET\-ar)
-   export CC=$(which $CRAFT_ARCH_TRIPLET\-gcc)
-   export CXX=$(which $CRAFT_ARCH_TRIPLET\-g++)
-   export LINK=$(which $CRAFT_ARCH_TRIPLET\-g++)
-   export LDFLAGS=-L/usr/$CRAFT_ARCH_TRIPLET/lib
+   apt install -y build-essential
 fi
