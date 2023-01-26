@@ -1,0 +1,4 @@
+export HOST_ARCH=$(uname -m)
+
+alias prepare-gcc=". ~/.cross-prepare-gcc"
+alias prepare=". ~/.prepare-build"
