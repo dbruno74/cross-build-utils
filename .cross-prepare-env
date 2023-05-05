@@ -36,5 +36,5 @@ if [[ "${CRAFT_TARGET_ARCH}" != "amd64" ]]; then
     add-apt-repository -n "deb [arch=$CRAFT_TARGET_ARCH] http://ports.ubuntu.com/ubuntu-ports jammy-security universe"
     add-apt-repository -n "deb [arch=$CRAFT_TARGET_ARCH] http://ports.ubuntu.com/ubuntu-ports jammy-security multiverse"
     apt update
-    dpkg --add-architecture $CRAFT_TARGET_ARCH
+    #dpkg --add-architecture $CRAFT_TARGET_ARCH
 fi
